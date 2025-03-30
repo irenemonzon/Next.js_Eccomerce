@@ -11,7 +11,7 @@ import { DropdownMenu ,
 import { useTheme } from "next-themes"
 import { SunIcon,MoonIcon,SunMoon } from "lucide-react"
 
-const ModeToogle= () => {
+const ModeToggle= () => {
     const [mounted,setMounted]=useState<boolean>(false);
     const {theme, setTheme}=useTheme()
 
@@ -68,4 +68,4 @@ const ModeToogle= () => {
   )
 }
 
-export default ModeToogle
+export default ModeToggle
