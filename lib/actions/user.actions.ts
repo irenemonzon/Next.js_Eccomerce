@@ -3,6 +3,7 @@
 import { signInFormSchema } from "../validators"
 import { signIn, signOut } from "@/auth"
 import { isRedirectError } from "next/dist/client/components/redirect-error"
+import { redirect } from "next/navigation"
 
 
 //Sign In the user with credentials
@@ -13,7 +14,16 @@ export async function signInWithCredentials(prevState:unknown,formData:FormData)
             email:formData.get('email'),
             password:formData.get('password')
         })
-        await signIn('credentials',user)
+
+        const callbackUrl = formData.get('callbackUrl') as string || '/';
+
+        await signIn('credentials', {
+            ...user,
+            redirect: false,
+            callbackUrl,
+          });
+      
+        redirect(callbackUrl);
         return {success:true,message:'Signed in successfully'}
 
     }catch(error){
