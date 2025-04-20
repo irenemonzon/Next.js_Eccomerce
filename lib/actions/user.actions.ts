@@ -11,10 +11,10 @@ export async function signInWithCredentials(prevState:unknown,formData:FormData)
     try{
         const user= signInFormSchema.parse({
             email:formData.get('email'),
-            passwor:formData.get('password')
+            password:formData.get('password')
         })
         await signIn('credentials',user)
-        return {success:true,messge:'Signed in successfully'}
+        return {success:true,message:'Signed in successfully'}
 
     }catch(error){
         if(isRedirectError(error)){

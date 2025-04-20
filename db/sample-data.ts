@@ -5,7 +5,7 @@ const sampleData = {
     {
       name:'Irene',
       email:'admin@example.com',
-      password: hashSync('123456',10),
+      password: hashSync('102938',10),
       role:'admin'
     },
     {
@@ -13,7 +13,7 @@ const sampleData = {
       email:'user@example.com',
       password: hashSync('123456',10),
       role:'user'
-    }
+    },
   ],
   products: [
     {
