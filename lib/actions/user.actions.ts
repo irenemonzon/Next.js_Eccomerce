@@ -6,6 +6,7 @@ import { isRedirectError } from "next/dist/client/components/redirect-error"
 import { redirect } from "next/navigation"
 import { hashSync } from "bcrypt-ts-edge"
 import {prisma} from '@/db/prisma'
+import { formatError } from "../utils"
 
 
 //Sign In the user with credentials
@@ -32,8 +33,8 @@ export async function signInWithCredentials(prevState:unknown,formData:FormData)
         if(isRedirectError(error)){
             throw error
         }
+        return{success:false, message:'Invalid email or password'}
     }
-    return{success:false, message:'Invalid email or password'}
 
 }
 
@@ -73,16 +74,15 @@ export async function signUpUser(prevState:unknown,formData:FormData){
             redirect: false,
             callbackUrl,
         })
-        
+
         redirect(callbackUrl);
         return {success:true, message:'User registered successfully'}
 
     }catch(error){
+       
         if(isRedirectError(error)){
             throw error
         }
+        return{success:false, message:formatError(error)}
     }
-    return{success:false, message:'User was not registered'}
-
-
 }
