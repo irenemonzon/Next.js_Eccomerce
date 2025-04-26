@@ -4,8 +4,8 @@ import type { NextAuthConfig } from 'next-auth'
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { prisma } from '@/db/prisma';
 import { compareSync } from 'bcrypt-ts-edge'
-
 import CredentialsProvider from 'next-auth/providers/credentials';
+
 
 export const config = {
   pages: {

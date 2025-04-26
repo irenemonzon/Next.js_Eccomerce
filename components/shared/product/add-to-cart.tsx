@@ -21,7 +21,7 @@ const  AddToCart= ({item}:{item:CartItem}) => {
       toast.error(res.message)
       return
     }
-    toast.success(`${item.name} added to cart`,
+    toast(`${item.name} added to cart`,
       {
         action: {
   
