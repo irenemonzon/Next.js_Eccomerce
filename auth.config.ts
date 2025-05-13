@@ -8,6 +8,7 @@ export const authConfig = {
     authorized({ request, auth }: any) {
       // Array of regex patterns of paths we want to protect
       const protectedPaths = [
+       
         /\/place-order/,
         /\/profile/,
         /\/user\/(.*)/,

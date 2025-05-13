@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import NextAuth from 'next-auth';
 import type { NextAuthConfig } from 'next-auth'
+import { authConfig } from './auth.config';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { prisma } from '@/db/prisma';
 import { compareSync } from 'bcrypt-ts-edge'
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { cookies } from 'next/headers';
 
 
 export const config = {
@@ -68,6 +70,7 @@ export const config = {
     }),
   ],
   callbacks: {
+    ...authConfig.callbacks,
     async session({ session, user, trigger, token }: any) {
       // Set the user ID from the token
       session.user.id = token.sub;
@@ -96,6 +99,28 @@ export const config = {
             where: { id: user.id },
             data: { name: token.name },
           });
+        }
+        if(trigger==='signIn'|| trigger==='signUp'){
+          const cookiesObject=await cookies()
+          const sessionCartId=cookiesObject.get('sessionCartId')?.value
+
+          if(sessionCartId){
+            const sessionCart= await prisma.cart.findFirst({
+              where:{sessionCartId},
+            })
+
+            if(sessionCart){
+              //delete current user cart
+              await prisma.cart.deleteMany({
+                where:{userId:user.id}
+              })
+              //Assign new cart
+              await prisma.cart.update({
+                where:{id:sessionCart.id},
+                data:{userId:user.id}
+              })
+            }
+          }
         }
 
       }
