@@ -73,3 +73,9 @@ export function formartCurrency(amount:number|string| null){
 
   }
 }
+
+//Shorten Uuid
+export function formatId(id:string){
+  return `...${id.substring(id.length -6)}`
+}
+
