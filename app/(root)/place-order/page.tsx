@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Image from "next/image";
 import { formartCurrency } from "@/lib/utils";
+import PlaceOrderForm from "./place-order-form";
 
 export const metadata:Metadata={
     title:'Place Order'
@@ -110,7 +111,7 @@ const PlaceOrderPage =async () => {
             </div>
             <div>
                 <Card>
-                    <CardContent className="p-4 gap-4 spac-y-4">
+                    <CardContent className="p-4 gap-4 space-y-4">
                         <div className="flex justify-between">
                             <div>Items</div>
                             <div>{formartCurrency(cart.itemsPrice)}</div>
@@ -127,6 +128,7 @@ const PlaceOrderPage =async () => {
                             <div>Total</div>
                             <div>{formartCurrency(cart.totalPrice)}</div>
                         </div>
+                        <PlaceOrderForm/>
                     </CardContent>
                 </Card>
             </div>

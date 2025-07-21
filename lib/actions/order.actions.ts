@@ -1,7 +1,7 @@
 'use server'
 
 import { isRedirectError } from "next/dist/client/components/redirect-error"
-import { formatError } from "../utils"
+import { convertToPlainObject, formatError } from "../utils"
 import { auth } from "@/auth"
 import { getMyCar } from "./cart.actions"
 import { getUserById } from "./user.actions"
@@ -23,13 +23,13 @@ export async function createOrder(){
 
         const user=await getUserById(userId);
         if(!cart|| cart.items.length===0){
-            return {success:false,message:'Your cart is empty',redirecTo:'/cart' }
+            return {success:false,message:'Your cart is empty',redirectTo:'/cart' }
         }
          if(!user.address){
-            return {success:false,message:'No shipping address',redirecTo:'/shipping-address' }
+            return {success:false,message:'No shipping address',redirectTo:'/shipping-address' }
         }
          if(!user.paymentMethod){
-            return {success:false,message:'No payment method',redirecTo:'/payment-method' }
+            return {success:false,message:'No payment method',redirectTo:'/payment-method' }
         }
 
         const order=insertOrderSchema.parse({
@@ -75,4 +75,21 @@ export async function createOrder(){
         return {success:false, message:formatError(error)}
 
     }
+}
+
+//Get order by Id
+
+export async function getOrderById(orderId:string){
+    const data=await prisma.order.findFirst({
+        where:{
+            id:orderId
+        },
+        include:{
+            orderitems:true,
+            user:{select:{name:true,email:true}}
+        }
+
+    })
+    
+    return convertToPlainObject(data)
 }
