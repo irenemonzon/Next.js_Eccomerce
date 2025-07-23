@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "test": "jest",
+    "test:watch":"jest --watch"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.8.0",
@@ -41,15 +43,20 @@
     "@eslint/eslintrc": "^3",
     "@prisma/client": "^6.5.0",
     "@tailwindcss/postcss": "^4.0.17",
-    "@types/node": "^20",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^20.19.9",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/ws": "^8.18.1",
     "bufferutil": "^4.0.9",
+    "dotenv": "^17.2.0",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
+    "jest": "^30.0.5",
     "prisma": "^6.5.0",
     "tailwindcss": "^4.0.17",
+    "ts-jest": "^29.4.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }
