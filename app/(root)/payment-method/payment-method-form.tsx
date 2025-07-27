@@ -44,7 +44,7 @@ const PaymentMethodForm = ({preferrredPaymentMethod}:{
     return (
       <>
         <div className="max-w-md mx-auto space-y-4">
-         <h1 className="h2-bold mt-4">Paymente methods</h1>
+         <h1 className="h2-bold mt-4">Payment methods</h1>
          <p className="text-sm text-muted-foreground"> Please select a payment method</p>
          <Form {...form}>
             <form 
