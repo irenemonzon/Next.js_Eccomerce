@@ -10,9 +10,9 @@ export const authConfig = {
       const protectedPaths = [
        
       
-        /\/profile/,
-        /\/user\/(.*)/,
-        /\/admin/,
+        /\/profiles/,
+    
+        /\/admins/,
       ];
 
       // Get pathname from the req URL object
