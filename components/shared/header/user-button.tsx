@@ -65,9 +65,7 @@ const UserButton= async() => {
                             >
                                 Sign Out
                             </Button>
-
                         </form>
-
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
