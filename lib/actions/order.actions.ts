@@ -271,7 +271,7 @@ type SalesDataType={
     });
     // Get monthly sales
 
-    const salesDataRaw= await prisma.$queryRaw<Array<{month:string;totalSales:Prisma.Decimal}>>`SELECT to_char("createdAt",'MM/YY') as "month",sum("totalPrice")as "totalSales" FROM "Order" GROUP BY to_chart("createdAt",'MM/YY')`
+    const salesDataRaw= await prisma.$queryRaw<Array<{month:string;totalSales:Prisma.Decimal}>>`SELECT to_char("createAt",'MM/YY') as "month",sum("totalPrice")as "totalSales" FROM "Order" GROUP BY to_char("createAt",'MM/YY')`
 
     const salesData:SalesDataType=salesDataRaw.map((entry)=>({
         month:entry.month,
