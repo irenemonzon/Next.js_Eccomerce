@@ -25,14 +25,20 @@ export async function getProductBySlug(slug:string){
         where:{slug:slug}
     });
 }
+export async function getProductById(productId:string){
+    const data=await prisma.product.findFirst({
+        where:{id:productId}
+    });
+    return convertToPlainObject(data)
+}
 
 //Get all products
 
 export async function getAllProducts({
-    query,
+    
     limit= PAGE_SIZE,
     page,
-    category
+    
 }:{
     query:string;
     limit?:number;
@@ -111,8 +117,6 @@ export async function updateProduct(data:z.infer<typeof updateProductSchema>){
             success:true,
             message:'Product created successfully'
         }
-
-
     }catch(error){
         return {success:false,message:formatError(error)}
     }

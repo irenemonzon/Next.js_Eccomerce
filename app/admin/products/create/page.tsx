@@ -2,7 +2,7 @@ import ProductForm from "@/components/admin/product-form"
 import { Metadata } from "next"
 
 
-export const metaData:Metadata={
+export const metadata:Metadata={
     title:'Create Product'
 }
 
