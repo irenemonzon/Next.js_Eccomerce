@@ -1,6 +1,6 @@
 'use server'
 
-import { shippingAddressSchema, signInFormSchema,signUpFormSchema, paymentMethodSchema} from "../validators"
+import { shippingAddressSchema, signInFormSchema,signUpFormSchema, paymentMethodSchema, updateUserSchema} from "../validators"
 import { auth, signIn, signOut } from "@/auth"
 import { isRedirectError } from "next/dist/client/components/redirect-error"
 import { redirect } from "next/navigation"
@@ -8,8 +8,9 @@ import { hashSync } from "bcrypt-ts-edge"
 import {prisma} from '@/db/prisma'
 import { formatError } from "../utils"
 import { ShippingAddress } from "@/types"
-import { z } from "zod"
+import { TypeOf, z } from "zod"
 import { PAGE_SIZE } from "../contants"
+import { revalidatePath } from "next/cache"
 
 
 
@@ -201,6 +202,48 @@ export async function getAllUsers({
     return{
         data,
         totalPages:Math.ceil(dataCount/limit)
+    }
+
+}
+
+export async function deleteUser(id:string){
+    try{
+        await prisma.user.delete({where:{id}})
+
+        revalidatePath('/admin/users')
+        return{
+            success:true,
+            message:'User deleted sucessfully'
+        }
+
+    }catch(error){
+        return{
+            success:false,
+            message:formatError(error)
+        }
+    }
+}
+
+export async function updateUser(user:z.infer<typeof  updateUserSchema>){
+    try{
+        await prisma.user.update({
+            where:{id:user.id},
+            data:{
+                name:user.name,
+                role:user.role
+            }
+        })
+        revalidatePath('/admin/users')
+        return{
+            success:true,
+            message:'User updated sucessfully'
+        }
+
+    }catch(error){
+        return{
+            success:false,
+            message:formatError(error)
+        }
     }
 
 }
