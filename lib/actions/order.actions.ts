@@ -297,12 +297,27 @@ type SalesDataType={
  }
  export async function getAllOrders({
     limit=PAGE_SIZE,
-    page
+    page,
+    query
  }:{
     limit?:number;
     page:number;
+    query:string;
  }){
+
+    const queryFilter:Prisma.OrderWhereInput= query && query !=="all" ? {
+        user:{
+            name:{
+                contains:query,
+                mode:'insensitive'
+            } as Prisma.StringFilter
+        }
+    }:{}
+
     const data = await prisma.order.findMany({
+        where:{
+            ...queryFilter
+        },
         orderBy:{createAt:'desc'},
         take:limit,
         skip:(page-1)* limit,
