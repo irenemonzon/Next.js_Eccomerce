@@ -8,7 +8,7 @@ import { hashSync } from "bcrypt-ts-edge"
 import {prisma} from '@/db/prisma'
 import { formatError } from "../utils"
 import { ShippingAddress } from "@/types"
-import { TypeOf, z } from "zod"
+import { z } from "zod"
 import { PAGE_SIZE } from "../contants"
 import { revalidatePath } from "next/cache"
 import { Prisma } from "@prisma/client"

@@ -227,7 +227,7 @@ const ProductForm = ({type,product,productId}:{
                             control={form.control}
                             name='isFeatured'
                             render={({ field }) => (
-                            <FormItem className='items-center'>
+                            <FormItem className='space-x-2 items-center'>
                                 <FormControl>
                                 <Checkbox
                                     checked={field.value}
