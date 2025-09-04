@@ -52,8 +52,6 @@ export async function getAllProducts({
     price?:string;
     rating?:string;
     sort?:string;
-
-
 }){
 
     const queryFilter: Prisma.ProductWhereInput =
@@ -95,7 +93,14 @@ export async function getAllProducts({
             ...priceFilter,
             ...ratingFilter
         },
-        orderBy:{createdAt:'desc'},
+        orderBy:
+        sort === 'lowest'
+        ? { price: 'asc' }
+        : sort === 'highest'
+        ? { price: 'desc' }
+        : sort === 'rating'
+        ? { rating: 'desc' }
+        : { createdAt: 'desc' },
         skip:(page-1)* limit,
         take:limit
     })
