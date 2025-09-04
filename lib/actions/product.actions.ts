@@ -37,7 +37,7 @@ export async function getProductById(productId:string){
 
 export async function getAllProducts({
     query,
-    limit= PAGE_SIZE,
+    limit= 10,
     page,
     category,
     price,
