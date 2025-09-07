@@ -6,6 +6,9 @@ import ProductPrice from "@/components/shared/product/product-price"
 import ProductImages from "@/components/shared/product/product-images"
 import AddToCart from "@/components/shared/product/add-to-cart"
 import { getMyCar } from "@/lib/actions/cart.actions"
+import { auth } from "@/auth"
+import ReviewList from "./review-list"
+import Rating from "@/components/shared/product/rating"
 
 
 const ProductDetailsPage =async (props: {
@@ -15,6 +18,10 @@ const ProductDetailsPage =async (props: {
     const product=await getProductBySlug(slug)
 
     if(!product) notFound()
+
+    const session= await auth()
+    const userId= session?.user?.id
+
 
     const cart=await getMyCar()
 
@@ -31,7 +38,8 @@ const ProductDetailsPage =async (props: {
                         {product.brand}{product.category}
                     </p>
                     <h1 className="h3-bold">{product.name}</h1>
-                    <p>{product.rating} of {product.numReviews}</p>
+                    <Rating value={Number(product.rating)}/>
+                    <p>{product.numReviews} reviews</p>
                     <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                         <ProductPrice value={Number(product.price)} className="w-24 rounded-full text-green-700 bg-green-100 px-5 py-2"/>
                     </div>
@@ -79,6 +87,14 @@ const ProductDetailsPage =async (props: {
                 </Card>
             </div>
         </div>
+    </section>
+    <section className="mt-10">
+        <h2 className="h2-bold">Customer Review</h2>
+        <ReviewList
+            userId={userId || ''}
+            productId={product.id}
+            productSlug={product.slug}
+        />
     </section>
    </>
   )
