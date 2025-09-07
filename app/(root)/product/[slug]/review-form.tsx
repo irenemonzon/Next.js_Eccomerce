@@ -19,7 +19,7 @@ import { toast } from "sonner";
 const ReviewForm = ({userId,productId, onReviewSubmitted}:{
     userId:string;
     productId:string;
-    onReviewSubmitted?:()=>void
+    onReviewSubmitted:()=>void
 }) => {
 
     const [open,setOpen]=useState(false)
