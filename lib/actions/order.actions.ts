@@ -176,7 +176,7 @@ export async function approvePaypalOrder(orderId:string, data:{orderID:string}){
 
 }
 
-async function updateOrderToPaid({
+export async function updateOrderToPaid({
     orderId,
     paymentResult
 
