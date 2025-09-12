@@ -12,13 +12,15 @@ import { Order } from '@/types';
 import {PayPalButtons,PayPalScriptProvider,usePayPalScriptReducer} from '@paypal/react-paypal-js'
 import { createPaypalOrder,approvePaypalOrder,updateOrderToPaidAdmin, deliveryOrder } from '@/lib/actions/order.actions';
 import { toast } from 'sonner';
+import StripePayment from './stripe-payment';
 
 const OrderDetailsTable = ({
-    order,paypalClientId, isAdmin
+    order,paypalClientId, isAdmin, stripeClientSecret
 }:{
     order:Order;
     paypalClientId:string;
-    isAdmin:boolean
+    isAdmin:boolean;
+    stripeClientSecret:string |null
 }) => {
 
     const {
@@ -216,6 +218,15 @@ const OrderDetailsTable = ({
                                 </PayPalScriptProvider>
                             </div>
                         )}
+                        { !isPaid && paymentMethod==='Stripe' && stripeClientSecret && (
+                                <StripePayment
+                                    priceInCents={Number(order.totalPrice)*100}
+                                    orderId={order.id}
+                                    clientSecret={stripeClientSecret}
+                                />
+                            )
+
+                        }
                         {isAdmin && !isPaid && paymentMethod==='CashOnDelivery' && (
                             <MarkAsPaidButton/>
                         )}
