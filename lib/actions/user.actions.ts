@@ -12,6 +12,7 @@ import { z } from "zod"
 import { PAGE_SIZE } from "../contants"
 import { revalidatePath } from "next/cache"
 import { Prisma } from "@prisma/client"
+import { getMyCar } from './cart.actions';
 
 
 
@@ -46,6 +47,14 @@ export async function signInWithCredentials(prevState:unknown,formData:FormData)
 
 //Sign user Out
 export async function signOutUser(){
+    
+    const currentCart = await getMyCar();
+
+    if (currentCart?.id) {
+        await prisma.cart.delete({ where: { id: currentCart.id } });
+    } else {
+        console.warn('No cart found for deletion.');
+    }
     await signOut()
 }
 
